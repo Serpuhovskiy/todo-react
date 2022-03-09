@@ -3,10 +3,8 @@ import Button from './Button';
 
 function TodoItem({ text, removeTodo, checkTodo, isChecked }) {
   const handleCheck = (e) => {
-    // console.log(e.target.checked);
     checkTodo(e.target.checked);
   }
-  console.log('Состояние ', isChecked);
   return (
     <li className="todo__item">
       <label className="todo__item-label">

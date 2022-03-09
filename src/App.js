@@ -3,11 +3,10 @@ import Button from './components/Button';
 import TodoItem from './components/TodoItem';
 
 const todos = [
-  { text: 'Изучить HTML', isChecked: true },
-  { text: 'Изучить CSS', isChecked: true },
-  { text: 'Изучить JS', isChecked: true },
-  { text: 'Изучить React', isChecked: true },
-  { text: 'Выложить на GitHub', isChecked: false },
+  { text: 'Задача №1', isChecked: true },
+  { text: 'Задача №2', isChecked: false },
+  { text: 'Задача №3', isChecked: false },
+  { text: 'Задача №4', isChecked: true },
 ];
 
 function App() {
@@ -21,17 +20,20 @@ function App() {
 
   const [finalTodoItems, setFinalTodoItems] = useState(todoItems);
 
+  console.log(finalTodoItems);
   const inputRef = useRef();
 
   const addTodoItem = () => {
-    let value = {
-      text: inputRef.current.value,
-      isChecked: false,
-    };
-    setTodoItems([...todoItems, value]);
-    localStorage.setItem('Todos', JSON.stringify([...todoItems, value]));
-    setFinalTodoItems([...todoItems, value]);
-    inputRef.current.value = '';
+    if (!!inputRef.current.value === true) {
+      let value = {
+        text: inputRef.current.value,
+        isChecked: false,
+      };
+      setTodoItems([...todoItems, value]);
+      localStorage.setItem('Todos', JSON.stringify([...todoItems, value]));
+      setFinalTodoItems([...todoItems, value]);
+      inputRef.current.value = '';
+    } else alert('Введите задачу!');
   };
 
   const removeTodo = (index) => {
@@ -63,7 +65,7 @@ function App() {
           <div className="todo__search">
             <input
               className="todo__search-input"
-              placeholder="Поиск"
+              placeholder="Поиск по задачам"
               type="text"
               onInput={onSearchTodo}
             />
