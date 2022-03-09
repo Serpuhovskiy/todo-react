@@ -12,7 +12,7 @@ const todos = [
 
 
 function App() {
-  // localStorage.setItem('Todos', JSON.stringify(todos));
+  localStorage.setItem('Todos', JSON.stringify(todos));
   let mas = JSON.parse(localStorage.getItem('Todos'));
   const [todoItems, setTodoItems] = useState(mas);
 
