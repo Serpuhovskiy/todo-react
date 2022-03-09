@@ -1,22 +1,27 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Button from './components/Button';
 import TodoItem from './components/TodoItem';
 
 const todos = [
-  { text: 'Изучить HTML', isChecked: true },
-  { text: 'Изучить CSS', isChecked: true },
-  { text: 'Изучить JS', isChecked: true },
-  { text: 'Изучить React', isChecked: true },
-  { text: 'Выложить на GitHub', isChecked: false },    
+  // { text: 'Изучить HTML', isChecked: true },
+  // { text: 'Изучить CSS', isChecked: true },
+  // { text: 'Изучить JS', isChecked: true },
+  // { text: 'Изучить React', isChecked: true },
+  // { text: 'Выложить на GitHub', isChecked: false },
 ];
 
-
 function App() {
-  localStorage.setItem('Todos', JSON.stringify(todos));
   let mas = JSON.parse(localStorage.getItem('Todos'));
+  if (mas.length === 0) {
+    localStorage.setItem('Todos', JSON.stringify(todos));
+    mas = JSON.parse(localStorage.getItem('Todos'));
+  }
   const [todoItems, setTodoItems] = useState(mas);
+  console.log(mas);
 
+  console.log(todoItems);
   const [finalTodoItems, setFinalTodoItems] = useState(todoItems);
+  console.log(finalTodoItems);
 
   const inputRef = useRef();
 
