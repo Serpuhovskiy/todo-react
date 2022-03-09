@@ -10,9 +10,9 @@ const todos = [
   { text: 'Выложить на GitHub', isChecked: false },    
 ];
 
-localStorage.setItem('Todos', JSON.stringify(todos));
 
 function App() {
+  // localStorage.setItem('Todos', JSON.stringify(todos));
   let mas = JSON.parse(localStorage.getItem('Todos'));
   const [todoItems, setTodoItems] = useState(mas);
 
