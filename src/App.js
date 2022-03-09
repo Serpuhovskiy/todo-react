@@ -3,25 +3,23 @@ import Button from './components/Button';
 import TodoItem from './components/TodoItem';
 
 const todos = [
-  // { text: 'Изучить HTML', isChecked: true },
-  // { text: 'Изучить CSS', isChecked: true },
-  // { text: 'Изучить JS', isChecked: true },
-  // { text: 'Изучить React', isChecked: true },
-  // { text: 'Выложить на GitHub', isChecked: false },
+  { text: 'Изучить HTML', isChecked: true },
+  { text: 'Изучить CSS', isChecked: true },
+  { text: 'Изучить JS', isChecked: true },
+  { text: 'Изучить React', isChecked: true },
+  { text: 'Выложить на GitHub', isChecked: false },
 ];
 
 function App() {
   let mas = JSON.parse(localStorage.getItem('Todos'));
-  if (mas.length === 0) {
+
+  if (mas === null) {
     localStorage.setItem('Todos', JSON.stringify(todos));
     mas = JSON.parse(localStorage.getItem('Todos'));
   }
   const [todoItems, setTodoItems] = useState(mas);
-  console.log(mas);
 
-  console.log(todoItems);
   const [finalTodoItems, setFinalTodoItems] = useState(todoItems);
-  console.log(finalTodoItems);
 
   const inputRef = useRef();
 
@@ -45,10 +43,8 @@ function App() {
   };
 
   const checkTodo = (flag, index) => {
-    console.log(`Number ${index} checked: ${flag}`);
     let currentTodos = todoItems.map((el) => ({ ...el }));
     currentTodos[index].isChecked = flag;
-    console.log(currentTodos);
     setTodoItems(currentTodos);
     localStorage.setItem('Todos', JSON.stringify(currentTodos));
     setFinalTodoItems(currentTodos);
@@ -57,7 +53,6 @@ function App() {
   const onSearchTodo = (e) => {
     const value = e.target.value.toLowerCase();
     let foundItems = todoItems.filter((item) => item.text.toLowerCase().includes(value));
-    console.log(foundItems);
     setFinalTodoItems(foundItems);
   };
   return (
