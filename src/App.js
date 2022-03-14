@@ -11,16 +11,14 @@ const todos = [
 
 function App() {
   let mas = JSON.parse(localStorage.getItem('Todos'));
-
   if (mas === null) {
     localStorage.setItem('Todos', JSON.stringify(todos));
     mas = JSON.parse(localStorage.getItem('Todos'));
   }
   const [todoItems, setTodoItems] = useState(mas);
 
-  const [finalTodoItems, setFinalTodoItems] = useState(todoItems);
+  const [searchValue, setSearchValue] = useState('');
 
-  console.log(finalTodoItems);
   const inputRef = useRef();
 
   const addTodoItem = () => {
@@ -31,7 +29,6 @@ function App() {
       };
       setTodoItems([...todoItems, value]);
       localStorage.setItem('Todos', JSON.stringify([...todoItems, value]));
-      setFinalTodoItems([...todoItems, value]);
       inputRef.current.value = '';
     } else alert('Введите задачу!');
   };
@@ -41,7 +38,6 @@ function App() {
     currentTodos.splice(index, 1);
     setTodoItems(currentTodos);
     localStorage.setItem('Todos', JSON.stringify(currentTodos));
-    setFinalTodoItems(currentTodos);
   };
 
   const checkTodo = (flag, index) => {
@@ -49,13 +45,10 @@ function App() {
     currentTodos[index].isChecked = flag;
     setTodoItems(currentTodos);
     localStorage.setItem('Todos', JSON.stringify(currentTodos));
-    setFinalTodoItems(currentTodos);
   };
 
   const onSearchTodo = (e) => {
-    const value = e.target.value.toLowerCase();
-    let foundItems = todoItems.filter((item) => item.text.toLowerCase().includes(value));
-    setFinalTodoItems(foundItems);
+    setSearchValue(e.target.value);
   };
   return (
     <div className="container">
@@ -68,6 +61,7 @@ function App() {
               placeholder="Поиск по задачам"
               type="text"
               onInput={onSearchTodo}
+              value={searchValue}
             />
           </div>
         </div>
@@ -84,19 +78,22 @@ function App() {
               Добавить todo
             </Button>
           </form>
+        
         </div>
 
         <div className="todo__items">
           <ul className="todo__list">
-            {finalTodoItems.map((el, index) => (
-              <TodoItem
-                key={`${el.text}_${index}`}
-                text={el.text}
-                removeTodo={() => removeTodo(index)}
-                isChecked={el.isChecked}
-                checkTodo={(isChecked) => checkTodo(isChecked, index)}
-              />
-            ))}
+            {todoItems
+              .filter((el) => el.text.toLowerCase().includes(searchValue))
+              .map((el, index) => (
+                <TodoItem
+                  key={`${el.text}_${index}`}
+                  text={el.text}
+                  removeTodo={() => removeTodo(index)}
+                  isChecked={el.isChecked}
+                  checkTodo={(isChecked) => checkTodo(isChecked, index)}
+                />
+              ))}
           </ul>
         </div>
       </div>
